@@ -1,9 +1,6 @@
 package kr.ac.kopo.board2.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -11,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "board")//exclude(배제하다)
 public class Reply extends BaseEntity{
 
     @Id
@@ -21,4 +18,7 @@ public class Reply extends BaseEntity{
     private String text;
 
     private String replyer;
+
+    @ManyToOne //Reply쪽에서 봤을때 Reply가 다수고  Board가 1이기 때문에
+    private Board board; //Foreign Key(참조무결성유지)
 }
