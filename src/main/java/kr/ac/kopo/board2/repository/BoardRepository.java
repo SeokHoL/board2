@@ -1,15 +1,18 @@
 package kr.ac.kopo.board2.repository;
 
 import kr.ac.kopo.board2.entity.Board;
+import kr.ac.kopo.board2.repository.search.SearchBoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+@Repository
+public interface BoardRepository extends JpaRepository<Board, Long>, SearchBoardRepository {
     @Query("select b, w from Board b left join b.writer w where b.bno=:bno")
     Object getBoardWithWriter(@Param("bno") Long bno);
 
@@ -28,7 +31,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             + "left join Reply r ON r.board = b "
             + "group by b, w",
             countQuery = "select count(b) from Board b")
-    Page<Object[]> getBoardByWithReplyCount(Pageable pageable);
+    Page<Object[]> getBoardWithReplyCount(Pageable pageable);
 
 
     @Query("select b, w, count(r) "
@@ -36,4 +39,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             +"left outer join Reply r ON r.board=b "
             +"where b.bno=:bno group by b, w")
     Object getBoardByBno(@Param("bno") Long bno);
+
+
 }
