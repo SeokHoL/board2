@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "board")//exclude(배제하다)
+@ToString(exclude = "board")
 public class Reply extends BaseEntity{
 
     @Id
@@ -19,8 +19,7 @@ public class Reply extends BaseEntity{
 
     private String replyer;
 
-
-    //지연로딩 방식으로 수정이유: 즉시로딩을 사용할경우 불피요한 join을 안할수 있다.
-    @ManyToOne(fetch = FetchType.LAZY) //Reply쪽에서 봤을때 Reply가 다수고  Board가 1이기 때문에
-    private Board board; //Foreign Key(참조무결성유지)
+    //    지연로딩 방식으로 수정 이유: 즉시로딩을 사용할 경우 불필요한 Join을 하므로 성능저하시킬 수 있다.
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Board board;//Foreign Key  설정(참조무결성 유지)
 }

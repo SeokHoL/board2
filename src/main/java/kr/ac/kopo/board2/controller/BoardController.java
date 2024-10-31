@@ -1,5 +1,6 @@
 package kr.ac.kopo.board2.controller;
 
+
 import kr.ac.kopo.board2.dto.BoardDTO;
 import kr.ac.kopo.board2.dto.PageRequestDTO;
 import kr.ac.kopo.board2.service.BoardService;

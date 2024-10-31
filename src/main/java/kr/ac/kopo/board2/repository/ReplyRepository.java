@@ -12,15 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
+    //    게시글 삭제시에 댓글 삭제
     @Modifying
     @Query("delete from Reply r where r.board.bno =:bno")
     void deleteByBno(Long bno);
 
-    //게시글번호에 해당하는 댓글 목록 반환
-
+    //    게시글 번호에 해당하는 댓글 목록 반환
     List<Reply> getRepliesByBoardOrderByRno(Board board);
 }
